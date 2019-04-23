@@ -1,0 +1,13 @@
+@import 'style/variables';
+
+html, body {
+    overflow: hidden;
+    height: 100%;
+    margin: 0;
+    background-color: $color-blue;
+}
+
+#content {
+    height: 100%;
+    background: $color-blue url("/img/loading.gif") no-repeat center center;
+}
