@@ -1,0 +1,20 @@
+{
+  "name": "1941-1945.etu.ru",
+  "version": "1.0.0",
+  "description": "Landing page dedicated to veterans of the Great Patriotic War",
+  "main": "./js/main.js",
+  "scripts": {
+    "dev": "webpack --watch",
+    "prod": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/safonovpro/1941-1945.etu.ru.git"
+  },
+  "author": "Alexey Safonov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/safonovpro/1941-1945.etu.ru/issues"
+  },
+  "homepage": "https://github.com/safonovpro/1941-1945.etu.ru#readme"
+}
