@@ -67,5 +67,13 @@ module.exports = {
                 use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
             }
         ]
+    },
+    devServer: {
+        contentBase: `${dirPath}/`,
+        index: `index.html`,
+        publicPath: '/dist/',
+        hot: true,
+        compress: true,
+        port: 9000
     }
 };
