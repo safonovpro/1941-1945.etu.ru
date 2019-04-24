@@ -11,8 +11,29 @@ class Exposition {
 
     async init() {
         this.data = await this._getData();
+
+        this._render();
     }
 
+    _render() {
+        const width = 100;
+        const height = 150;
+        let index = 0;
+        
+        for(let h = 0; h < this.wrapHeight; h += height) {
+            for(let w = 0; w < this.wrapWidth; w += width) {
+                const veteran = document.createElement('div');
+
+                veteran.className = 'veteran';
+                veteran.style.cssText = `top: ${h}px; left: ${w}px;`;
+                veteran.style.cssText += `width: ${width}px; height: ${height}px;`;
+                veteran.style.cssText += `background-image: url("${this.data[index++].photo.url}")`;
+
+                this.wrap.appendChild(veteran);
+            }
+        }
+    }
+    
     async _getData() {
         const pageSize = 100;
         let data = [];
