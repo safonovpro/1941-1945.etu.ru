@@ -1,0 +1,11 @@
+#content {
+    position:  relative;
+
+    .veteran {
+        position: absolute;
+        background: $color-gold;
+        background-position: center;
+        background-size: cover;
+        filter: grayscale(100%);
+    }
+}
