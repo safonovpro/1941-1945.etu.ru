@@ -4,8 +4,6 @@ class Exposition {
     constructor(target, url) {
         this.urlAPI = (url !== undefined) ? url : 'https://lk.etu.ru/api/immortal-division-soldiers';
         this.wrap = document.querySelector(target);
-        this.wrapWidth = this.wrap.offsetWidth;
-        this.wrapHeight = this.wrap.offsetHeight;
         this.data = [];
     }
 
@@ -13,20 +11,27 @@ class Exposition {
         this.data = await this._getData();
 
         this._render();
+        window.addEventListener('resize', () => this._render());
     }
 
     _render() {
-        const width = 100;
-        const height = 150;
+        const wrapWidth = this.wrap.offsetWidth;
+        const wrapHeight = this.wrap.offsetHeight;
+        const veteranWidth = 100;
+        const veteranHeight = 150;
         let index = 0;
         
-        for(let h = 0; h < this.wrapHeight; h += height) {
-            for(let w = 0; w < this.wrapWidth; w += width) {
+        while (this.wrap.lastChild) {
+            this.wrap.removeChild(this.wrap.lastChild);
+        }
+        
+        for(let h = 0; h < wrapHeight; h += veteranHeight) {
+            for(let w = 0; w < wrapWidth; w += veteranWidth) {
                 const veteran = document.createElement('div');
 
                 veteran.className = 'veteran';
                 veteran.style.cssText = `top: ${h}px; left: ${w}px;`;
-                veteran.style.cssText += `width: ${width}px; height: ${height}px;`;
+                veteran.style.cssText += `width: ${veteranWidth}px; height: ${veteranHeight}px;`;
                 veteran.style.cssText += `background-image: url("${this.data[index++].photo.url}")`;
 
                 this.wrap.appendChild(veteran);
