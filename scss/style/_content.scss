@@ -1,7 +1,10 @@
 #content {
     position:  relative;
+    background: none;
 
     .veteran {
+        z-index: 100;
+        cursor: pointer;
         position: absolute;
         background: $color-gold;
         background-position: center;
