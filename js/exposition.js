@@ -6,6 +6,7 @@ class Exposition {
         this.wrap = document.querySelector(target);
         this.itemSize = { width: 75, height: 100 };
         this.data = [];
+        this.usedIds = new Set();
     }
 
     async init() {
@@ -23,9 +24,12 @@ class Exposition {
             this.wrap.removeChild(this.wrap.lastChild);
         }
         
-        for(let h = 0, i = 0; h < wrapHeight; h += this.itemSize.height) {
-            for(let w = 0; w < wrapWidth; w += this.itemSize.width, i++) {
-                this._renderItem(i, h, w);
+        for(let h = 0; h < wrapHeight; h += this.itemSize.height) {
+            for(let w = 0; w < wrapWidth; w += this.itemSize.width) {
+                const id = this._getNotUsededId();
+
+                this._renderItem(id, h, w);
+                this.usedIds.add(id);
             }
         }
     }
@@ -41,8 +45,33 @@ class Exposition {
 
         this.wrap.appendChild(veteran);
         veteran.addEventListener('click', (e) => {
-            console.log(e);
+            e.target.style.cssText += 'z-index: 101;';
+            this._renderItem(this._getNotUsededId(), top, left);
+
+            this._animateCSS(e.target, 'fadeOutUp', () => {
+                this.usedIds.delete(e.target.id);
+                this.wrap.removeChild(e.target);
+            });
         });
+    }
+
+    _animateCSS(node, animationName, callback) {
+        node.classList.add('animated', animationName)
+
+        function handleAnimationEnd() {
+            node.classList.remove('animated', animationName)
+            node.removeEventListener('animationend', handleAnimationEnd)
+
+            if (typeof callback === 'function') callback()
+        }
+
+        node.addEventListener('animationend', handleAnimationEnd)
+    }
+
+    _getNotUsededId() {
+        let id = Math.floor(Math.random() * this.data.length);
+
+        return this.usedIds.has(id) ? this._getNotUsededId() : id;
     }
     
     async _getData() {
