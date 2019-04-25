@@ -4,6 +4,7 @@
   "description": "Landing page dedicated to veterans of the Great Patriotic War",
   "main": "./js/main.js",
   "dependencies": {
+    "animate.css": "^3.7.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-polyfill": "^6.26.0",
