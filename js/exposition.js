@@ -1,9 +1,10 @@
 import 'babel-polyfill';
 
 class Exposition {
-    constructor(target, url) {
-        this.urlAPI = (url !== undefined) ? url : 'https://lk.etu.ru/api/immortal-division-soldiers';
+    constructor(target, url = 'https://lk.etu.ru/api/immortal-division-soldiers') {
+        this.urlAPI = url;
         this.wrap = document.querySelector(target);
+        this.itemSize = { width: 75, height: 100 };
         this.data = [];
     }
 
@@ -17,30 +18,31 @@ class Exposition {
     _render() {
         const wrapWidth = this.wrap.offsetWidth;
         const wrapHeight = this.wrap.offsetHeight;
-        const veteranWidth = 100;
-        const veteranHeight = 150;
-        let index = 0;
         
         while (this.wrap.lastChild) {
             this.wrap.removeChild(this.wrap.lastChild);
         }
-
-        console.log(this.data);
         
-        for(let h = 0; h < wrapHeight; h += veteranHeight) {
-            for(let w = 0; w < wrapWidth; w += veteranWidth) {
-                const veteran = document.createElement('div');
-
-                veteran.className = 'veteran';
-                veteran.id = this.data[index].id;
-                veteran.style.cssText = `top: ${h}px; left: ${w}px;`;
-                veteran.style.cssText += `width: ${veteranWidth}px; height: ${veteranHeight}px;`;
-                veteran.style.cssText += `background-image: url("${this.data[index].photo.url}")`;
-                index++;
-
-                this.wrap.appendChild(veteran);
+        for(let h = 0, i = 0; h < wrapHeight; h += this.itemSize.height) {
+            for(let w = 0; w < wrapWidth; w += this.itemSize.width, i++) {
+                this._renderItem(i, h, w);
             }
         }
+    }
+
+    _renderItem(index, top, left) {
+        const veteran = document.createElement('div');
+
+        veteran.className = 'veteran';
+        veteran.id = this.data[index].id;
+        veteran.style.cssText = `top: ${top}px; left: ${left}px;`;
+        veteran.style.cssText += `width: ${this.itemSize.width}px; height: ${this.itemSize.height}px;`;
+        veteran.style.cssText += `background-image: url("${this.data[index].photo.url}")`;
+
+        this.wrap.appendChild(veteran);
+        veteran.addEventListener('click', (e) => {
+            console.log(e);
+        });
     }
     
     async _getData() {
