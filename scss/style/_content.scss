@@ -1,14 +1,52 @@
+#header {
+    $top: 15px;
+
+    z-index: 200;
+    position: absolute;
+    top: $top;
+    left: 0;
+    padding: 15px 50px 15px 125px;
+    background-image: url("/img/white-with-alfa.png");
+    font-size: 1rem;
+
+    .title {
+        margin: 0;
+        font-family: $font-family-title;
+        font-size: 2.5rem;
+        color: $color-orange;
+    }
+    
+    .cite {
+        color: $color-gray;
+        font-style: normal;
+
+        &::before {
+            content: '—';
+            margin-right: 10px;
+        }
+    }
+
+    .ribbon {
+        position: absolute;
+        top: -$top;
+        left: 10px;
+        width: 80px;
+        height: 170px;
+        background: url("/img/st-george-ribbon.png") no-repeat;
+    }
+}
+
 #content {
     position:  relative;
     background: none;
-
+    
     .veteran {
         z-index: 100;
-        cursor: pointer;
         position: absolute;
         background: $color-gold;
         background-position: center;
         background-size: cover;
+        cursor: pointer;
         filter: grayscale(100%);
     }
 }
