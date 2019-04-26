@@ -30,11 +30,11 @@ class Exposition {
             }
         }
 
-        // this.interval = setInterval(() => {
-        //     const target = document.getElementById(this._getRandomUsededId());
+        this.interval = setInterval(() => {
+            const target = document.getElementById(this._getRandomUsededIndexFromData());
 
-        //     if(target) target.click(); // todo без условия валятся ошибки...
-        // }, 500);
+            if(target) target.click();
+        }, 350);
     }
 
     _renderItem(indexFromData, top, left) {
@@ -46,7 +46,7 @@ class Exposition {
             this._renderItem(this._getNotUsededIndexFromData(), top, left);
             this._animateCSS(e.target, 'fadeOutUp', () => {
                 this.wrap.removeChild(e.target);
-                this.usedIndexFromData.delete(e.target.id);
+                this.usedIndexFromData.delete(Number(e.target.id));
             });
         }
 
@@ -77,6 +77,8 @@ class Exposition {
 
     _getNotUsededIndexFromData() {
         let indexInData = Math.floor(Math.random() * this.data.length);
+
+        console.log(this.usedIndexFromData.size);
 
         return this.usedIndexFromData.has(indexInData) ? this._getNotUsededIndexFromData() : indexInData;
     }
