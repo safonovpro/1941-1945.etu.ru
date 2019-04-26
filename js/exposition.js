@@ -78,8 +78,6 @@ class Exposition {
     _getNotUsededIndexFromData() {
         let indexInData = Math.floor(Math.random() * this.data.length);
 
-        console.log(this.usedIndexFromData.size);
-
         return this.usedIndexFromData.has(indexInData) ? this._getNotUsededIndexFromData() : indexInData;
     }
 
