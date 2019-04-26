@@ -6,7 +6,7 @@ class Exposition {
         this.wrap = document.querySelector(target);
         this.itemSize = { width: 75, height: 100 };
         this.data = [];
-        this.usedIds = new Set();
+        this.usedIndexFromData = new Set();
     }
 
     async init() {
@@ -26,7 +26,7 @@ class Exposition {
         
         for(let h = 0; h < wrapHeight; h += this.itemSize.height) {
             for(let w = 0; w < wrapWidth; w += this.itemSize.width) {
-                this._renderItem(this._getNotUsededId(), h, w);
+                this._renderItem(this._getNotUsededIndexFromData(), h, w);
             }
         }
 
@@ -37,26 +37,26 @@ class Exposition {
         // }, 500);
     }
 
-    _renderItem(indexInData, top, left) {
+    _renderItem(indexFromData, top, left) {
         const veteran = document.createElement('div');
 
         veteran.className = 'veteran';
-        veteran.id = indexInData;
+        veteran.id = indexFromData;
         veteran.style.cssText = `top: ${top}px; left: ${left}px;`;
         veteran.style.cssText += `width: ${this.itemSize.width}px; height: ${this.itemSize.height}px;`;
-        veteran.style.cssText += `background-image: url("${this.data[indexInData].photo.url}")`;
+        veteran.style.cssText += `background-image: url("${this.data[indexFromData].photo.url}")`;
 
         this.wrap.appendChild(veteran);
-        this.usedIds.add(indexInData);
+        this.usedIndexFromData.add(indexFromData);
 
         veteran.addEventListener('click', (e) => {
             e.target.style.cssText += 'z-index: 101;';
             
-            this._renderItem(this._getNotUsededId(), top, left);
+            this._renderItem(this._getNotUsededIndexFromData(), top, left);
 
             this._animateCSS(e.target, 'fadeOutUp', () => {
                 this.wrap.removeChild(e.target);
-                this.usedIds.delete(e.target.id);
+                this.usedIndexFromData.delete(e.target.id);
             });
         });
     }
@@ -74,14 +74,14 @@ class Exposition {
         target.addEventListener('animationend', handleAnimationEnd)
     }
 
-    _getNotUsededId() {
+    _getNotUsededIndexFromData() {
         let indexInData = Math.floor(Math.random() * this.data.length);
 
-        return this.usedIds.has(indexInData) ? this._getNotUsededId() : indexInData;
+        return this.usedIndexFromData.has(indexInData) ? this._getNotUsededIndexFromData() : indexInData;
     }
 
-    _getRandomUsededId() {
-        const arrayUsedIds = Array.from(this.usedIds);
+    _getRandomUsededIndexFromData() {
+        const arrayUsedIds = Array.from(this.usedIndexFromData);
         const indexInArrayUsedIds = Math.floor(Math.random() * arrayUsedIds.length);
 
         return arrayUsedIds[indexInArrayUsedIds];
