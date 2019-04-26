@@ -20,6 +20,7 @@ class Exposition {
         const wrapWidth = this.wrap.offsetWidth;
         const wrapHeight = this.wrap.offsetHeight;
         
+        this.usedIndexFromData = new Set();
         while (this.wrap.lastChild) {
             this.wrap.removeChild(this.wrap.lastChild);
         }
@@ -34,7 +35,7 @@ class Exposition {
             const target = document.getElementById(this._getRandomUsededIndexFromData());
 
             if(target) target.click();
-        }, 350);
+        }, 500);
     }
 
     _renderItem(indexFromData, top, left) {
