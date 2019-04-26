@@ -50,3 +50,27 @@
         filter: grayscale(100%);
     }
 }
+
+#message {
+    z-index: 200;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    padding: 25px 450px 15px 50px;
+    background: url("/img/white-with-alfa.png"), url("/img/monument-with-alfa.png") no-repeat bottom right;
+    font-size: 1.1rem;
+
+    strong {
+        color: $color-red;
+    }
+
+    .students {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 420px;
+        height: 400px;
+        background: url("/img/students.png") no-repeat bottom right;
+    }
+}
