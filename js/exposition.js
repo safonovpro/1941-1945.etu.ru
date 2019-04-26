@@ -7,6 +7,7 @@ class Exposition {
         this.itemSize = { width: 75, height: 100 };
         this.data = [];
         this.usedIndexFromData = new Set();
+        this.delay = 500;
     }
 
     async init() {
@@ -31,11 +32,12 @@ class Exposition {
             }
         }
 
+        clearInterval(this.interval);
         this.interval = setInterval(() => {
             const target = document.getElementById(this._getRandomUsededIndexFromData());
 
             if(target) target.click();
-        }, 500);
+        }, this.delay);
     }
 
     _renderItem(indexFromData, top, left) {
