@@ -26,52 +26,65 @@ class Exposition {
         
         for(let h = 0; h < wrapHeight; h += this.itemSize.height) {
             for(let w = 0; w < wrapWidth; w += this.itemSize.width) {
-                const id = this._getNotUsededId();
-
-                this._renderItem(id, h, w);
-                this.usedIds.add(id);
+                this._renderItem(this._getNotUsededId(), h, w);
             }
         }
+
+        // this.interval = setInterval(() => {
+        //     const target = document.getElementById(this._getRandomUsededId());
+
+        //     if(target) target.click(); // todo без условия валятся ошибки...
+        // }, 500);
     }
 
-    _renderItem(index, top, left) {
+    _renderItem(indexInData, top, left) {
         const veteran = document.createElement('div');
 
         veteran.className = 'veteran';
-        veteran.id = this.data[index].id;
+        veteran.id = indexInData;
         veteran.style.cssText = `top: ${top}px; left: ${left}px;`;
         veteran.style.cssText += `width: ${this.itemSize.width}px; height: ${this.itemSize.height}px;`;
-        veteran.style.cssText += `background-image: url("${this.data[index].photo.url}")`;
+        veteran.style.cssText += `background-image: url("${this.data[indexInData].photo.url}")`;
 
         this.wrap.appendChild(veteran);
+        this.usedIds.add(indexInData);
+
         veteran.addEventListener('click', (e) => {
             e.target.style.cssText += 'z-index: 101;';
+            
             this._renderItem(this._getNotUsededId(), top, left);
 
             this._animateCSS(e.target, 'fadeOutUp', () => {
-                this.usedIds.delete(e.target.id);
                 this.wrap.removeChild(e.target);
+                this.usedIds.delete(e.target.id);
             });
         });
     }
 
-    _animateCSS(node, animationName, callback) {
-        node.classList.add('animated', animationName)
+    _animateCSS(target, animationName, callback) {
+        target.classList.add('animated', animationName)
 
         function handleAnimationEnd() {
-            node.classList.remove('animated', animationName)
-            node.removeEventListener('animationend', handleAnimationEnd)
+            target.classList.remove('animated', animationName)
+            target.removeEventListener('animationend', handleAnimationEnd)
 
             if (typeof callback === 'function') callback()
         }
 
-        node.addEventListener('animationend', handleAnimationEnd)
+        target.addEventListener('animationend', handleAnimationEnd)
     }
 
     _getNotUsededId() {
-        let id = Math.floor(Math.random() * this.data.length);
+        let indexInData = Math.floor(Math.random() * this.data.length);
 
-        return this.usedIds.has(id) ? this._getNotUsededId() : id;
+        return this.usedIds.has(indexInData) ? this._getNotUsededId() : indexInData;
+    }
+
+    _getRandomUsededId() {
+        const arrayUsedIds = Array.from(this.usedIds);
+        const indexInArrayUsedIds = Math.floor(Math.random() * arrayUsedIds.length);
+
+        return arrayUsedIds[indexInArrayUsedIds];
     }
     
     async _getData() {
