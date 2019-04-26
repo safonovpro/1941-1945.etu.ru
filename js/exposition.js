@@ -39,6 +39,16 @@ class Exposition {
 
     _renderItem(indexFromData, top, left) {
         const veteran = document.createElement('div');
+        const changeItem = (e) => {
+            e.target.style.cssText += 'z-index: 101;';
+            
+            e.target.removeEventListener('click', changeItem);
+            this._renderItem(this._getNotUsededIndexFromData(), top, left);
+            this._animateCSS(e.target, 'fadeOutUp', () => {
+                this.wrap.removeChild(e.target);
+                this.usedIndexFromData.delete(e.target.id);
+            });
+        }
 
         veteran.className = 'veteran';
         veteran.id = indexFromData;
@@ -49,16 +59,7 @@ class Exposition {
         this.wrap.appendChild(veteran);
         this.usedIndexFromData.add(indexFromData);
 
-        veteran.addEventListener('click', (e) => {
-            e.target.style.cssText += 'z-index: 101;';
-            
-            this._renderItem(this._getNotUsededIndexFromData(), top, left);
-
-            this._animateCSS(e.target, 'fadeOutUp', () => {
-                this.wrap.removeChild(e.target);
-                this.usedIndexFromData.delete(e.target.id);
-            });
-        });
+        veteran.addEventListener('click', changeItem);
     }
 
     _animateCSS(target, animationName, callback) {
