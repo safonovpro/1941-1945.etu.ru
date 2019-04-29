@@ -12,7 +12,7 @@
 
 Данные получаются GET-запросом с адреса `https://lk.etu.ru/api/immortal-division-soldiers`. Формат ответа в виде json при следующих GET-параметрах `page_size=1` и `current_page=1`:
 
-```json
+```js
 [
     {
         page_size: 1,
