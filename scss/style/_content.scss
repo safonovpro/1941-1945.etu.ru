@@ -37,6 +37,7 @@
 }
 
 #content {
+    overflow: hidden;
     position:  relative;
     background: none;
     
@@ -72,5 +73,56 @@
         width: 420px;
         height: 400px;
         background: url("/img/students.png") no-repeat bottom right;
+    }
+}
+
+@media (max-width: $width-medium) {
+    #header {
+        .title {
+            font-size: 2.3rem;
+        }
+    }
+
+    #message {
+        width: 270px;
+        padding-right: 400px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: $width-small) {
+    #header {
+        .title {
+            font-size: 1.5rem;
+        }
+    }
+
+    #message {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px 25px;
+
+        .students {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: $width-extra-small) {
+    #header {
+        background: none;
+
+        .ribbon {
+            top: -135px;
+        }
+
+        .title, .cite {
+            display: none;
+        }
+    }
+
+    #message {
+        padding: 7px 15px;
+        font-size: 0.85rem;
     }
 }
