@@ -1,4 +1,3 @@
-import '../scss/preload.scss';
 import '../scss/style.scss';
 
 import Exposition from './exposition';
