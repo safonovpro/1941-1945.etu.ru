@@ -50,7 +50,7 @@
 
 ### Сотрудники [отдела информационных систем университета](https://etu.ru/ru/upravlenie-informacionnyh-tehnologiy/otel-informacionnyh-sistem)
 
-1. [Макин Владислав](https://github.com/Zlob) – функционал портала университета для ввод данных и предоставление API
+1. [Макин Владислав](https://github.com/Zlob) – функционал портала университета для ввода данных и предоставление API
 
 ### Сотрудники [дирекции сайта университета](https://etu.ru/ru/upravlenie-informacionnyh-tehnologiy/direkciya-sayta/)
 
