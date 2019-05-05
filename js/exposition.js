@@ -7,7 +7,8 @@ class Exposition {
         this.itemSize = { width: 75, height: 100 };
         this.data = [];
         this.usedIndexFromData = new Set();
-        this.delay = 500;
+        this.interval = null;
+        this.intervalDelay = 500;
     }
 
     async init() {
@@ -32,13 +33,8 @@ class Exposition {
             }
         }
 
-        clearInterval(this.interval);
-        this.interval = setInterval(() => {
-            const target = document.getElementById(this._getRandomUsededIndexFromData());
-
-            this.usedIndexFromData.delete(parseInt(target.id));
-            target.dispatchEvent(new Event('change'));
-        }, this.delay);
+        if(!this.interval) clearInterval(this.interval);
+        this.interval = setInterval(this._changeItem.bind(this), this.intervalDelay);
     }
 
     _renderItem(indexFromData, top, left) {
@@ -53,18 +49,19 @@ class Exposition {
         this.wrap.appendChild(veteran);
         this.usedIndexFromData.add(indexFromData);
 
-        veteran.addEventListener('change', this._changeItem.bind(this));
+        veteran.addEventListener('click', (e) => console.log(e.target));
     }
 
-    _changeItem(e) {
-        const top = parseInt(e.target.style.top);
-        const left = parseInt(e.target.style.left);
+    _changeItem() {
+        const target = document.getElementById(this._getRandomUsededIndexFromData());
+        const targetTop = parseInt(target.style.top);
+        const targetLeft = parseInt(target.style.left);
 
-        e.target.style.cssText += 'z-index: 101;';
+        target.style.cssText += 'z-index: 101;';
         
-        e.target.removeEventListener('change', this._changeItem);
-        this._renderItem(this._getNotUsededIndexFromData(), top, left);
-        this._animateCSS(e.target, 'fadeOutUp', () => this.wrap.removeChild(e.target));
+        this.usedIndexFromData.delete(parseInt(target.id));
+        this._renderItem(this._getNotUsededIndexFromData(), targetTop, targetLeft);
+        this._animateCSS(target, 'fadeOutUp', () => this.wrap.removeChild(target));
     }
 
     _animateCSS(target, animationName, callback) {
