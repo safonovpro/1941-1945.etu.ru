@@ -36,22 +36,13 @@ class Exposition {
         this.interval = setInterval(() => {
             const target = document.getElementById(this._getRandomUsededIndexFromData());
 
-            if(target) target.dispatchEvent(new Event('change'));
+            this.usedIndexFromData.delete(parseInt(target.id));
+            target.dispatchEvent(new Event('change'));
         }, this.delay);
     }
 
     _renderItem(indexFromData, top, left) {
         const veteran = document.createElement('div');
-        const changeItem = (e) => {
-            e.target.style.cssText += 'z-index: 101;';
-            
-            e.target.removeEventListener('change', changeItem);
-            this._renderItem(this._getNotUsededIndexFromData(), top, left);
-            this._animateCSS(e.target, 'fadeOutUp', () => {
-                this.wrap.removeChild(e.target);
-                this.usedIndexFromData.delete(Number(e.target.id));
-            });
-        }
 
         veteran.className = 'veteran';
         veteran.id = indexFromData;
@@ -62,20 +53,31 @@ class Exposition {
         this.wrap.appendChild(veteran);
         this.usedIndexFromData.add(indexFromData);
 
-        veteran.addEventListener('change', changeItem);
+        veteran.addEventListener('change', this._changeItem.bind(this));
+    }
+
+    _changeItem(e) {
+        const top = parseInt(e.target.style.top);
+        const left = parseInt(e.target.style.left);
+
+        e.target.style.cssText += 'z-index: 101;';
+        
+        e.target.removeEventListener('change', this._changeItem);
+        this._renderItem(this._getNotUsededIndexFromData(), top, left);
+        this._animateCSS(e.target, 'fadeOutUp', () => this.wrap.removeChild(e.target));
     }
 
     _animateCSS(target, animationName, callback) {
-        target.classList.add('animated', animationName)
+        target.classList.add('animated', animationName);
 
         function handleAnimationEnd() {
-            target.classList.remove('animated', animationName)
-            target.removeEventListener('animationend', handleAnimationEnd)
+            target.classList.remove('animated', animationName);
+            target.removeEventListener('animationend', handleAnimationEnd);
 
-            if (typeof callback === 'function') callback()
+            if (typeof callback === 'function') callback();
         }
 
-        target.addEventListener('animationend', handleAnimationEnd)
+        target.addEventListener('animationend', handleAnimationEnd);
     }
 
     _getNotUsededIndexFromData() {
