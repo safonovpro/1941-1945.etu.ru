@@ -36,7 +36,7 @@ class Exposition {
         this.interval = setInterval(() => {
             const target = document.getElementById(this._getRandomUsededIndexFromData());
 
-            if(target) target.click();
+            if(target) target.dispatchEvent(new Event('change'));
         }, this.delay);
     }
 
@@ -45,7 +45,7 @@ class Exposition {
         const changeItem = (e) => {
             e.target.style.cssText += 'z-index: 101;';
             
-            e.target.removeEventListener('click', changeItem);
+            e.target.removeEventListener('change', changeItem);
             this._renderItem(this._getNotUsededIndexFromData(), top, left);
             this._animateCSS(e.target, 'fadeOutUp', () => {
                 this.wrap.removeChild(e.target);
@@ -62,7 +62,7 @@ class Exposition {
         this.wrap.appendChild(veteran);
         this.usedIndexFromData.add(indexFromData);
 
-        veteran.addEventListener('click', changeItem);
+        veteran.addEventListener('change', changeItem);
     }
 
     _animateCSS(target, animationName, callback) {
