@@ -33,7 +33,7 @@ class Exposition {
             }
         }
 
-        if(!this.interval) clearInterval(this.interval);
+        if(this.interval) clearInterval(this.interval);
         this.interval = setInterval(this._changeItem.bind(this), this.intervalDelay);
     }
 
